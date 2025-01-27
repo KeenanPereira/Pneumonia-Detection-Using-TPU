@@ -1,2 +1,2 @@
 # Pneumonia-Detection-Using-TPU
-This repository is used for my internship in which I will be doing Pneumonia Detection using TPU 
+TYBsc Hons AI Ml i have chosen Pneumonia Detection using TPU as my Minor Project. I chose this topic as my interest lies in healthcare
