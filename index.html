@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Minor Project Edtech Internship</title>
+    <style>
+      /* Base reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Tahoma, sans-serif;
+        color: #fff;
+        min-height: 100vh;
+        padding: 20px;
+        background-image: url('/static/three.jpg');
+        background-repeat: no-repeat;
+        background-position: bottom right;
+        background-size: auto 200px;
+        background-color: #1c1c1c;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 5px;
+      }
+      .subtitle {
+        font-size: 1.2rem;
+        color: #ccc;
+        margin-bottom: 20px;
+      }
+      .top-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 300px;
+        margin-bottom: 20px;
+      }
+      .btn {
+        display: inline-block;
+        background-color: #444;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        padding: 12px;
+        text-align: center;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+      }
+      .btn:hover {
+        background-color: #666;
+      }
+      .custom-file-label {
+        display: inline-block;
+        background-color: #444;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        padding: 12px;
+        text-align: center;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+      }
+      .custom-file-label:hover {
+        background-color: #666;
+      }
+      .file-input {
+        display: none;
+      }
+      .upload-btn {
+        margin-top: 10px;
+      }
+      #previewImage {
+        max-width: 200px;
+        display: none;
+        margin-top: 15px;
+        border: 2px solid #fff;
+        border-radius: 5px;
+      }
+      .message-container {
+        margin-top: 20px;
+        background-color: rgba(0,0,0,0.5);
+        padding: 15px;
+        border-radius: 5px;
+        max-width: 600px;
+      }
+      .message-container h2 {
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Minor Project Edtech Internship</h1>
+    <div class="subtitle">Face Detection</div>
+    <div class="top-controls">
+      <a href="/live" class="btn">Live Prediction</a>
+      <form method="POST" enctype="multipart/form-data">
+        <label class="custom-file-label">
+          Choose File
+          <input 
+            class="file-input" 
+            type="file" 
+            name="file" 
+            accept="image/*" 
+            required 
+            onchange="previewFile()">
+        </label>
+        <button class="btn upload-btn" type="submit">Upload and Predict</button>
+      </form>
+      <img id="previewImage" src="#" alt="Image Preview">
+    </div>
+
+    {% if result %}
+      <div class="message-container">
+        <h2>Prediction:</h2>
+        <p>{{ result }}</p>
+        {% if "angry" in result or "sad" in result %}
+          <style>
+            body {
+              background-color: #6699CC !important;
+              background-image: none !important;
+            }
+          </style>
+          <p>Relax and take deep breaths.</p>
+        {% elif "happy" in result %}
+          <p>It’s good to see a sunshine.</p>
+        {% elif "neutral" in result %}
+          <p>Ask the person to smile a little and show some teeth.</p>
+        {% elif "surprise" in result %}
+          <p>What’s got you like that? Please share the tea.</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <script>
+      function previewFile() {
+        const preview = document.getElementById('previewImage');
+        const fileInput = document.querySelector('.file-input');
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function() {
+          preview.src = reader.result;
+          preview.style.display = 'block';
+        }, false);
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      }
+    </script>
+  </body>
+</html>
